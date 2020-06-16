@@ -9,6 +9,8 @@ var { nanoid } = require("nanoid");
 var cors = require("cors");
 get_players = require("./test.js");
 
+
+app.use(cors()); // Use this after the variable declaration
 // key: id, value: room dict
 rooms = {};
 
@@ -235,7 +237,7 @@ function create_room(id) {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
-app.use(cors()); // Use this after the variable declaration
+//app.use(cors()); // Use this after the variable declaration
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
