@@ -41,6 +41,7 @@ function create_room(id) {
         grid: [],
         Words: [],
         player_scores: [],
+        time: 60
     };
 
     const generate_letter = () => {
@@ -152,6 +153,11 @@ function create_room(id) {
             nsp.emit("host", room.host);
             nsp.emit("add_to_list", room.players_list);
         });
+
+        socket.on('setting_time', (time) => {
+            room.time = time;
+            socket.emit('sending_time', (room.time));
+        })
 
         //start game
         socket.on("start game", (host) => {
