@@ -245,7 +245,7 @@ function create_room(id) {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
-//app.use(cors()); // Use this after the variable declaration
+app.use(cors()); // Use this after the variable declaration
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -288,7 +288,7 @@ app.get("/test", function(req, res) {
 });
 
 // Route for creating a new room
-app.get("/rooms/new", function(req, res) {
+app.get("/rooms/new", cors(), function(req, res) {
     console.log("being called");
     let newRoomId = nanoid(5).toLocaleUpperCase();
     create_room(newRoomId);
@@ -296,7 +296,7 @@ app.get("/rooms/new", function(req, res) {
 });
 
 // Route for accessing a room id -- returns 200 if room exists and 404 if not
-app.get("/rooms/exists/:id", function(req, res, next) {
+app.get("/rooms/exists/:id", cors(), function(req, res, next) {
     let id = req.params.id;
     if (id in rooms) {
         res.send("true");
