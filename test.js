@@ -138,31 +138,31 @@ const word_scores = (array_of_words, bgrid) => {
 
         check_connected(string) {
             if (string.length == 0) {
-                console.log('success')
+                //console.log('success')
                 return true;
             } else {
-                //console.log(string[0] + 'this is string of 0')
+                // console.log(string[0] + 'this is string of 0')
                 for (let i = 0; i < this.Grid.length; i++) {
                     if (string[0] == this.Grid[i].letter) {
-                        //console.log(this.Grid[i].letter + 'letter present in grid')
+                        // console.log(this.Grid[i].letter + 'letter present in grid')
                         if (string.length == 1) {
-                            //console.log('success')
+                            // console.log('success')
                             return true;
                         }
                         for (let j = 0; j < this.Grid[i].children.length; j++) {
                             if (this.Grid[i].children[j].letter == string[1]) {
                                 var bool = this.check_connected(string.substring(1))
                                 if (bool === true) {
-                                    //console.log('leaving function')
+                                    // console.log('leaving function')
                                     return true
                                 }
                                 if (bool === false) {
-                                    //console.log('leaving function')
+                                    // console.log('leaving function')
                                     return false
                                 }
                             } else {
                                 if (j === this.Grid[i].children.length - 1) {
-                                    //console.log('second string of letter not present in children')
+                                    // console.log('second string of letter not present in children')
                                 }
                             }
                         }
@@ -170,7 +170,7 @@ const word_scores = (array_of_words, bgrid) => {
                     //letter is not present in the grid
                     else {
                         if (i == 15) {
-                            //console.log('letter not present in grid')
+                            // console.log('letter not present in grid')
                             return false
                         }
                     }
@@ -209,7 +209,7 @@ const word_scores = (array_of_words, bgrid) => {
                     this.Grid[i].children.push(this.Grid[i - 4])
                 }
             }
-
+            //console.log(this.Grid)
         }
 
         clean() {
@@ -219,8 +219,10 @@ const word_scores = (array_of_words, bgrid) => {
                         this.Grid[i].children.splice(j, 1)
                     }
                 }
-
             }
+            //console.log(this.Grid[9])
+            //console.log(this.Grid[14])
+
         }
 
         print() {

@@ -5,15 +5,12 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var http = require("http");
 var socketIo = require("socket.io");
-const { v4: uuidv4 } = require("uuid");
 var { nanoid } = require("nanoid");
 var cors = require("cors");
 get_players = require("./test.js");
 
 // key: id, value: room dict
 rooms = {};
-
-
 
 // create express app
 var app = express();
@@ -41,7 +38,7 @@ function create_room(id) {
         grid: [],
         Words: [],
         player_scores: [],
-        time: 60
+        time: 60,
     };
 
     const generate_letter = () => {
@@ -135,7 +132,6 @@ function create_room(id) {
         //add_player
         socket.on("add_player", (name) => {
             let check = false;
-            console.log(name + "i am getting called");
             //if players list length = 0 then it's the host
             if (room.players_list.length === 0) {
                 room.host = name;
@@ -148,19 +144,20 @@ function create_room(id) {
                 }
             }
             if (check) {} else {
-                room.players_list.push({ name: name, id: socket.id })
+                room.players_list.push({ name: name, id: socket.id });
             }
             nsp.emit("host", room.host);
             nsp.emit("add_to_list", room.players_list);
         });
 
-        socket.on('setting_time', (time) => {
+        socket.on("setting_time", (time) => {
             room.time = time;
-            socket.emit('sending_time', (room.time));
-        })
+            nsp.emit("sending_time", room.time);
+        });
 
         //start game
         socket.on("start game", (host) => {
+            console.log(room.host + 'this is host')
             console.log("Start game getting called" + "by" + host);
             if (host === room.host) {
                 room.start = true;
@@ -169,17 +166,18 @@ function create_room(id) {
                 room.Words = [];
                 console.log(room.start);
                 console.log(room.grid);
+                nsp.emit("starting_game", {
+                    start: room.start,
+                    grid: room.grid,
+                });
             }
-            nsp.emit("starting_game", {
-                start: room.start,
-                grid: room.grid,
-            });
         });
 
         //get words
         socket.on("Words", (data) => {
             console.log("End Game starting");
             words = data.words;
+            console.log(words)
             player_count = data.no_of_players;
             console.log(player_count);
             var count = 0;
@@ -210,8 +208,8 @@ function create_room(id) {
         });
 
         const print_players = () => {
-            final_players = room.player_scores.pop();
-            if (final_players !== undefined) {
+            final_players = room.player_scores.pop()
+            if (final_players.length === room.players_list.length) {
                 console.log(final_players);
                 return final_players;
             }
