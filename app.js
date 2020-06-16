@@ -10,12 +10,14 @@ var cors = require("cors");
 get_players = require("./test.js");
 
 
-app.use(cors()); // Use this after the variable declaration
+
 // key: id, value: room dict
 rooms = {};
 
 // create express app
 var app = express();
+
+app.use(cors()); // Use this after the variable declaration
 
 // create HTTP server with socketIO
 var server = http.createServer(app);
