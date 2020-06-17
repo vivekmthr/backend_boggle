@@ -194,6 +194,7 @@ function create_room(id) {
             name = data.name;
             words += `\n${name}`;
             room.Words.push(words);
+            console.log(room.Words)
             for (let i = 0; i < room.Words.length; i++) {
                 if (room.Words[i].includes(`${name}`)) {
                     count++;
@@ -205,9 +206,9 @@ function create_room(id) {
             console.log(room.Words);
             players = get_players(room.Words, room.grid);
             room.player_scores.push(players);
-            //final_players = (room.player_scores.pop())
-            //console.log(final_players)
+            console.log(room.player_scores)
             if (room.player_scores.length === player_count) {
+                console.log('I am getting called player scores')
                 socket.on("get_scores", () => {
                     Players = print_players();
                     nsp.emit("sending scores", {
@@ -219,9 +220,11 @@ function create_room(id) {
 
         const print_players = () => {
             final_players = room.player_scores.pop()
-            if (final_players.length === room.players_list.length) {
-                console.log(final_players);
-                return final_players;
+            if (final_players !== undefined) {
+                if (final_players.length === room.players_list.length) {
+                    console.log(final_players);
+                    return final_players;
+                }
             }
         };
 
