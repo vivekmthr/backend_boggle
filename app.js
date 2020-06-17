@@ -157,9 +157,12 @@ function create_room(id) {
             nsp.emit("add_to_list", room.players_list);
         });
 
-        socket.on("setting_time", (time) => {
-            room.time = time;
-            nsp.emit("sending_time", room.time);
+        socket.on("setting_time", (args) => {
+            console.log(args)
+            if (room.host === args.host) {
+                room.time = args.time;
+                nsp.emit("sending_time", room.time);
+            }
         });
 
         //start game
