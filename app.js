@@ -8,6 +8,7 @@ var socketIo = require("socket.io");
 var { nanoid } = require("nanoid");
 var cors = require("cors");
 get_players = require("./test.js");
+cancel_words = require("./cancel.js")
 
 
 // key: id, value: room dict
@@ -45,7 +46,8 @@ function create_room(id) {
         grid: [],
         Words: [],
         player_scores: [],
-        time: 60,
+        time: 0,
+        min_length: 3
     };
 
     const generate_letter = () => {
@@ -155,6 +157,10 @@ function create_room(id) {
             }
             nsp.emit("host", room.host);
             nsp.emit("add_to_list", room.players_list);
+            if (room.time !== 0) {
+                console.log(room.time)
+                nsp.emit("sending_time", room.time);
+            }
         });
 
         socket.on("setting_time", (args) => {
@@ -162,6 +168,17 @@ function create_room(id) {
             if (room.host === args.host) {
                 room.time = args.time;
                 nsp.emit("sending_time", room.time);
+            }
+        });
+
+
+
+        socket.on("min_length", (args) => {
+            console.log(args)
+            if (room.host === args.host) {
+                room.min_length = args.min_length;
+                console.log(room.min_length)
+                nsp.emit('getmin_length', (room.min_length))
             }
         });
 
@@ -206,7 +223,7 @@ function create_room(id) {
             console.log(room.Words);
             players = get_players(room.Words, room.grid);
             room.player_scores.push(players);
-            console.log(room.player_scores)
+            //console.log(room.player_scores)
             if (room.player_scores.length === player_count) {
                 console.log('I am getting called player scores')
                 socket.on("get_scores", () => {
@@ -222,7 +239,8 @@ function create_room(id) {
             final_players = room.player_scores.pop()
             if (final_players !== undefined) {
                 if (final_players.length === room.players_list.length) {
-                    console.log(final_players);
+                    console.log(room.min_length + 'this is min_length')
+                    final_players = cancel_words(final_players, room.min_length)
                     return final_players;
                 }
             }

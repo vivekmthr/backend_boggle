@@ -259,7 +259,8 @@ const word_scores = (array_of_words, bgrid) => {
         class Word {
             constructor(word, score, bool) {
                 this.word = word,
-                    this.score = score
+                    this.score = score,
+                    this.common = false;
             }
         }
         for (let i = 0; i < array_of_words.length; i++) {
@@ -267,12 +268,30 @@ const word_scores = (array_of_words, bgrid) => {
                 //console.log(bool1)
             bool2 = words.check(array_of_words[i])
             if (bool1 && bool2 && array_of_words[i].length >= 3) {
-                final_words.push(new Word(array_of_words[i], array_of_words[i].length))
+                final_words.push(new Word(array_of_words[i], score(array_of_words[i])))
             } else {
                 final_words.push(new Word(array_of_words[i], 0))
             }
         }
         return final_words
+    }
+
+    const score = (word) => {
+        if (word.length === 3) {
+            return 1
+        }
+        if (word.length === 4) {
+            return 2
+        }
+        if (word.length === 5) {
+            return 4
+        }
+        if (word.length === 6) {
+            return 6
+        }
+        if (word.length >= 7) {
+            return 8
+        }
     }
 
     const create_player = (array_of_words, graph) => {
