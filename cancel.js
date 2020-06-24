@@ -45,6 +45,9 @@ get_players = require("./test.js");
 
 //cancel words
 const cancel_words = (players, min_length) => {
+    for (let i = 0; i < players.length; i++) {
+        similar_words(players[i].words)
+    }
     //while loop where everytime one player is removed
     let count = players.length;
     let players_cancel = [];
@@ -77,6 +80,17 @@ const cancel_helper = (players, index, min_length) => {
                 players[0].words[i].common = true;
                 players[index].words[j].common = true;
                 players[index].words[j].score = 0;
+            }
+        }
+    }
+}
+
+const similar_words = (list) => {
+    for (let i = 0; i < list.length; i++) {
+        for (let j = i + 1; j < list.length; j++) {
+            if (list[i].word === list[j].word) {
+                console.log(list[j].word)
+                list.splice(i, 1);
             }
         }
     }

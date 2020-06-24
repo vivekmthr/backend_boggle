@@ -9,6 +9,11 @@ var { nanoid } = require("nanoid");
 var cors = require("cors");
 get_players = require("./test.js");
 cancel_words = require("./cancel.js")
+get_common_words = require("./autosolve.js")
+const {
+    solve,
+    five_and_up_solve
+} = require('./completesolve.js');
 
 
 // key: id, value: room dict
@@ -228,8 +233,14 @@ function create_room(id) {
                 console.log('I am getting called player scores')
                 socket.on("get_scores", () => {
                     Players = print_players();
+                    common_words = get_common_words(room.grid);
+                    all_words = solve(room.grid);
+                    five_and_up = five_and_up_solve(room.grid);
                     nsp.emit("sending scores", {
                         players: Players,
+                        common_words: common_words,
+                        all_words: all_words,
+                        five_and_up: five_and_up
                     });
                 });
             }

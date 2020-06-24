@@ -6,17 +6,24 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "boggle-game-solver": "^1.0.1",
     "check-if-word": "^1.2.1",
+    "common_word_list": "^0.2.55",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "fs": "0.0.1-security",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "more-words": "^1.0.2",
     "morgan": "~1.9.1",
     "nanoid": "^3.1.10",
+    "node-boggle-solver": "^1.0.4",
     "os": "^0.1.1",
     "socket.io": "^2.3.0",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "word-list": "^3.1.0",
+    "word-list-google": "^1.0.1"
   }
 }
