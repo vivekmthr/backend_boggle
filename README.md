@@ -1,1 +1,2 @@
-Implements the back-end for my Online Boggle game in socket.io and React
+**Introduction**
+This Repo contains the Node.js backend for my boggle project.
