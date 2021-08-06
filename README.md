@@ -1,3 +1,5 @@
+# Online Boggle Backend in Node.js
+
 **Introduction**
 
 This Repo contains the Node.js backend for my boggle project.
