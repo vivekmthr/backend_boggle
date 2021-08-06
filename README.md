@@ -13,4 +13,5 @@ This Repo contains the Node.js backend for my boggle project.
  - When the host navigates off the page the socket instance is destroyed. 
 
 **Deployment**
+
 The game is live at onlineboggle.web.app!
