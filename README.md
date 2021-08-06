@@ -2,7 +2,7 @@
 
 **Introduction**
 
-This Repo contains the Node.js backend for my boggle project.
+This Repo contains the Node.js backend for my online boggle personal project.
 
 **Design Overview**
  - The project backend is Node.js. The app.js initializes the server and creates a socket instance between the server and the client website.
